@@ -10,4 +10,9 @@
     border: 1px solid;
     border-left-width: 7.5px;
     padding: .75rem 1rem;
+    margin-bottom: 1.3rem;
+
+    & h6 {
+        color: rgba(0, 0, 0, .7);
+    }
 }
