@@ -4,6 +4,9 @@
 .border-success {
     border-color: #3de41b !important;
 }
+.w-fit {
+    width: fit-content;
+}
 
 .task {
     border-radius: .35rem;
