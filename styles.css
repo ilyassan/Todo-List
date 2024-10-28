@@ -4,10 +4,18 @@
 .border-success {
     border-color: #3de41b !important;
 }
+.w-fit {
+    width: fit-content;
+}
 
 .task {
     border-radius: .35rem;
     border: 1px solid;
     border-left-width: 7.5px;
     padding: .75rem 1rem;
+    margin-bottom: 1.3rem;
+
+    & h6 {
+        color: rgba(0, 0, 0, .7);
+    }
 }
