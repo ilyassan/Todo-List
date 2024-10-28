@@ -1,0 +1,13 @@
+.border-bottom-2 {
+    border-bottom: 2px solid;
+}
+.border-success {
+    border-color: #3de41b !important;
+}
+
+.task {
+    border-radius: .35rem;
+    border: 1px solid;
+    border-left-width: 7.5px;
+    padding: .75rem 1rem;
+}
