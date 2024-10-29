@@ -1,20 +1,31 @@
-let addBtn = document.getElementById("add-task");
+let addSingleTaskBtn = document.getElementById("add-task");
+let addMultipleTasksBtn = document.getElementById("add-multiple-tasks");
+
 let formPopup = document.getElementById("create-task-popup");
 
 updateListsTasksCount();
 
-addBtn.addEventListener("click", function () {
-    formPopup.classList.remove("d-none");
+addSingleTaskBtn.addEventListener("click", () => openAndClosePopup(false))
+addMultipleTasksBtn.addEventListener("click", () => openAndClosePopup(true))
 
-    let closeBtn = document.getElementById("closeIcon");
+function openAndClosePopup (isMultiple) {
+    formPopup.classList.remove("d-none");
+    if (isMultiple) {
+        formPopup.setAttribute("multiple", true);
+    }
 
     formPopup.addEventListener("click", function(event) {
+        let closeBtn = document.querySelector("#closeIcon span");
+
         if (event.target == formPopup || event.target == closeBtn) {
             formPopup.classList.add("d-none");
+            document.getElementById("alert").classList.add("d-none");
+            if (isMultiple) {
+                formPopup.removeAttribute("multiple");
+            }
         }
     })
-})
-
+}
 
 function createTask(data) {
     let colors = {

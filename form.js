@@ -27,14 +27,14 @@ function main() {
         let data = {
             title: document.getElementById("title").value,
             description: document.getElementById("description").value,
-            startDate: getValueFromMenu("start-date-menu").textContent,
-            dueDate: getValueFromMenu("due-date-menu").textContent,
-            priority: getValueFromMenu("priority-menu").textContent,
-            state: getValueFromMenu("state-menu").getAttribute("value"),
+            startDate: getValueFromMenu("start-date-menu")?.textContent,
+            dueDate: getValueFromMenu("due-date-menu")?.textContent,
+            priority: getValueFromMenu("priority-menu")?.textContent,
+            state: getValueFromMenu("state-menu")?.getAttribute("value"),
         }
         function getValueFromMenu (id){
             let element = document.querySelector(`#${id} .dropdown-toggle`);
-            return element.hasAttribute("value") ? element : false;
+            return element.hasAttribute("value") ? element : null;
         }
 
         return data;
@@ -65,7 +65,9 @@ function main() {
     function addTask(data) {
         createTask(data);
         form.replaceWith(emptyForm); // Close PopUp
-        emptyForm.parentElement.classList.add("d-none");
+        if (! emptyForm.parentElement.hasAttribute("multiple")) {
+            emptyForm.parentElement.classList.add("d-none");
+        }
         main();
     }
 

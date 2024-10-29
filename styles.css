@@ -22,7 +22,7 @@ body {
     background-color: rgba(0, 0, 0, .75);
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
 }
 
 .dropdown-menu {
