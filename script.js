@@ -33,7 +33,10 @@ function createTask(data) {
         P2: "secondary",
         P3: "info",
     };
+    
+    let taskId = `task-${Date.now()}`
     let task = `<div
+                    id="${taskId}"
                     data-start-date="${data.startDate}"
                     data-due-date="${data.dueDate}"
                     data-priority="${data.priority}"
@@ -43,7 +46,7 @@ function createTask(data) {
                 >
                     <h6 class="font-weight-light mb-3">${data.title}</h6>
                     <div class="labels">
-                        <button class="btn btn-danger py-0">Delete</button>
+                        <button class="delete-btn btn btn-danger py-0">Delete</button>
                         <button class="btn btn-warning py-0 text-white">Edit</button>
                     </div>
                 </div>
@@ -52,6 +55,13 @@ function createTask(data) {
 
     listOfTasks.innerHTML += task;
     updateListsTasksCount();
+
+    document.querySelector(`#${taskId} .delete-btn`).addEventListener("click", () => deleteTask(taskId));
+}
+
+function deleteTask(taskId) {
+    document.getElementById(taskId).remove();
+    updateListsTasksCount(); // Update the task count after deltete
 }
 
 function updateListsTasksCount () {
