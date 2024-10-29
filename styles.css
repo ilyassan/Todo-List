@@ -12,7 +12,7 @@ body {
     position: relative;
 }
 
-.overlay {
+#create-task-popup {
     position: absolute;
     left: 0;
     right: 0;

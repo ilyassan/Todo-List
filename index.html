@@ -10,8 +10,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 </head>
 <body>
-    <div class="d-none overlay">
-        <form class="w-50 d-flex flex-column bg-white p-4 rounded">
+    <div id="create-task-popup" class="d-none">
+        <form class="w-50 d-flex flex-column bg-white p-4 pt-1 rounded">
+            <div id="closeIcon" role="button" class="d-flex justify-content-end text-secondary h3">x</div>
             <p id="alert" class="d-none alert alert-danger text-center py-1">Please fill all the fields.</p>
             <div class="form-group mb-3">
                 <label for="title">Title:</label>
@@ -73,13 +74,13 @@
 
     <div class="container pt-3">
         <div class="row mt-4">
-            <button style="height: 2.7rem;" class="col-2 btn btn-primary d-flex justify-content-center align-items-center py-0 gap-2">Add Task <span class="h1">+</span></button>
+            <button id="add-task" style="height: 2.7rem;" class="col-2 btn btn-primary d-flex justify-content-center align-items-center py-0 gap-2">Add Task <span class="h1">+</span></button>
 
             <div class="col-8">
                 <input type="text" class="form-control h-100 bg-light" placeholder="Search...">
             </div>
             
-            <button style="height: 2.7rem;" class="col-2 btn btn-primary d-flex justify-content-center align-items-center py-0 gap-2">Add Multiple <span class="h1">+</span></button>
+            <button id="add-multiple-tasks" style="height: 2.7rem;" class="col-2 btn btn-primary d-flex justify-content-center align-items-center py-0 gap-2">Add Multiple <span class="h1">+</span></button>
 
         </div>
 
@@ -158,5 +159,6 @@
 
 
     <script src="form.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
