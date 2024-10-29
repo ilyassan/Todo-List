@@ -6,32 +6,19 @@ let formPopup = document.getElementById("create-task-popup");
 
 updateListsTasksCount();
 
-addSingleTaskBtn.addEventListener("click", () => openAndClosePopup(false))
-addMultipleTasksBtn.addEventListener("click", () => openAndClosePopup(true))
+addSingleTaskBtn.addEventListener("click", () => openAndClosePopup(true));
+addMultipleTasksBtn.addEventListener("click", () => openAndClosePopup(false));
+
+function openAndClosePopup (isSingle) {
+    formPopup.classList.remove("d-none");
+    if(isSingle){
+        document.getElementById("multiple-controll").classList.add("d-none")
+    }
+}
 
 searchInput.onkeyup = function () {
     showOnlyfilteredTasks(); // Show only tasks that match the current filter search
     updateListsTasksCount(); // Update the lists tasks count based on the new filter
-}
-
-
-function openAndClosePopup (isMultiple) {
-    formPopup.classList.remove("d-none");
-    if (isMultiple) {
-        formPopup.setAttribute("multiple", true);
-    }
-
-    formPopup.addEventListener("click", function(event) {
-        let closeBtn = document.querySelector("#closeIcon span");
-
-        if (event.target == formPopup || event.target == closeBtn) {
-            formPopup.classList.add("d-none");
-            document.getElementById("alert").classList.add("d-none");
-            if (isMultiple) {
-                formPopup.removeAttribute("multiple");
-            }
-        }
-    })
 }
 
 function createTask(data) {
