@@ -1,5 +1,6 @@
 let addSingleTaskBtn = document.getElementById("add-task");
 let addMultipleTasksBtn = document.getElementById("add-multiple-tasks");
+let searchInput = document.getElementById("search");
 
 let formPopup = document.getElementById("create-task-popup");
 
@@ -7,6 +8,12 @@ updateListsTasksCount();
 
 addSingleTaskBtn.addEventListener("click", () => openAndClosePopup(false))
 addMultipleTasksBtn.addEventListener("click", () => openAndClosePopup(true))
+
+searchInput.onkeyup = function () {
+    showOnlyfilteredTasks(); // Show only tasks that match the current filter search
+    updateListsTasksCount(); // Update the lists tasks count based on the new filter
+}
+
 
 function openAndClosePopup (isMultiple) {
     formPopup.classList.remove("d-none");
@@ -49,14 +56,15 @@ function createTask(data) {
                         <button class="delete-btn btn btn-danger py-0">Delete</button>
                         <button class="btn btn-warning py-0 text-white">Edit</button>
                     </div>
-                </div>
-                `
+                </div>`
+
     let listOfTasks = document.querySelectorAll(".list")[data.state].querySelector(".tasks");
 
-    listOfTasks.innerHTML += task;
+    listOfTasks.insertAdjacentHTML("beforeend", task);
+    showOnlyfilteredTasks(); //  To hide the created task if didn't match the current filter search
     updateListsTasksCount();
 
-    document.querySelector(`#${taskId} .delete-btn`).addEventListener("click", () => deleteTask(taskId));
+    listOfTasks.querySelector(`#${taskId} .delete-btn`).addEventListener("click", () => deleteTask(taskId));
 }
 
 function deleteTask(taskId) {
@@ -64,9 +72,23 @@ function deleteTask(taskId) {
     updateListsTasksCount(); // Update the task count after deltete
 }
 
+function showOnlyfilteredTasks() {
+    document.querySelectorAll(".task").forEach(function(task) {
+        let title = task.querySelector("h6").textContent;
+
+        if (title.search(searchInput.value) == -1) { // If didn't match
+            task.classList.add("d-none");
+            return;
+        }
+        task.classList.remove("d-none");
+    })
+}
+
 function updateListsTasksCount () {
     document.querySelectorAll(".list").forEach( function (list) {
         let spanCount = list.querySelector(".count");
-        spanCount.textContent = list.querySelectorAll(".tasks .task").length;
+        spanCount.textContent = Array.from(list.querySelectorAll(".tasks .task"))
+                                    .filter(task => !task.classList.contains("d-none"))
+                                    .length;
     })
 }
