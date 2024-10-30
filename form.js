@@ -4,21 +4,42 @@ let newFormBtn = document.getElementById("addFormBtn");
 let removeFormBtn = document.getElementById("removeFormBtn");
 let saveBtn = document.getElementById("saveBtn");
 let alert = document.getElementById("alert");
+let addSingleTaskBtn = document.getElementById("add-task");
+let addMultipleTasksBtn = document.getElementById("add-multiple-tasks");
 
+addSingleTaskBtn.addEventListener("click", () => openPopup(true));
+addMultipleTasksBtn.addEventListener("click", () => openPopup(false));
+
+function openPopup (isSingle) {
+    formPopup.classList.remove("d-none");
+    let controllMultiple = document.getElementById("multiple-controll");
+
+    if(isSingle){ // If user will add only 1 task.
+        // Remove the add new form and remove form buttons.
+        controllMultiple.classList.add("d-none");
+
+        // If there is duplicate forms remove them and let only 1.
+        let forms = formsContainer.children;
+        while (forms.length > 1) {
+            formsContainer.removeChild(forms[1]);
+        }
+    }else {
+        controllMultiple.classList.remove("d-none");
+    }
+}
 
 popup.addEventListener("click", function(event) {
     let closeBtn = document.querySelector("#closeIcon span");
 
     if (event.target == popup || event.target == closeBtn) {
         formPopup.classList.add("d-none");
-        alert.classList.add("d-none");
+        hideAlert();
         document.getElementById("multiple-controll").classList.remove("d-none");
     }
 });
 
-
 const form = popup.querySelector("form");
-fillInputsWithDates(form);
+applyFormEvents(form);
 const emptyForm = form.cloneNode(true);
 
 newFormBtn.addEventListener("click", createNewForm)
@@ -32,13 +53,14 @@ function removeForm() {
     if (forms.length == 1) return;
     
     forms[forms.length - 1].remove();
+    hideAlert();
 }
 
 function createNewForm() {
     let emptyFormCopy = emptyForm.cloneNode(true);
     emptyFormCopy.classList.add("border-top", "border-dark", "pt-3")
     formsContainer.appendChild(emptyFormCopy);
-    fillInputsWithDates(emptyFormCopy);
+    applyFormEvents(emptyFormCopy);
 }
 
 function submit (){
@@ -62,8 +84,8 @@ function getTaskData(form) {
     let data = {
         title: form.querySelector(".title").value,
         description: form.querySelector(".description").value,
-        startDate: getValueFromMenu("start-date-menu")?.textContent,
-        dueDate: getValueFromMenu("due-date-menu")?.textContent,
+        startDate: form.querySelector(".start-date-menu").value,
+        dueDate: form.querySelector(".due-date-menu").value,
         priority: getValueFromMenu("priority-menu")?.textContent,
         state: getValueFromMenu("state-menu")?.getAttribute("value"),
     }
@@ -78,17 +100,15 @@ function getTaskData(form) {
 function validatedData(data) {
     for (let value of Object.values(data)) {
         if(! value){
-            alert.classList.remove("d-none");
+            showAlert();
 
-            document.querySelector("input").addEventListener("focus", hideAlert)
+            document.querySelectorAll("input").forEach(function(input){
+                input.addEventListener("focus", hideAlert)
+            })
             document.querySelector("textarea").addEventListener("focus", hideAlert)
             document.querySelectorAll(".dropdown-toggle").forEach(function(ele){
                 ele.addEventListener("click", hideAlert)
             })
-
-            function hideAlert() {
-                alert.classList.add("d-none");
-            }
 
             return false;
         }
@@ -101,75 +121,37 @@ function addTask(data) {
     createTask(data);
     let formClone = emptyForm.cloneNode(true);
     formsContainer.replaceChildren(formClone);
-    fillInputsWithDates(formClone);
+    applyFormEvents(formClone);
     popup.classList.add("d-none");
 }
 
-function fillInputsWithDates(form) {
-    let startDateMenu = form.querySelector(".start-date-menu .dropdown-menu");
-    let dueDateMenu = form.querySelector(".due-date-menu .dropdown-menu");
+function applyFormEvents(form) {
+    let startDateInput = form.querySelector(".start-date-menu");
+    let dueDateInput = form.querySelector(".due-date-menu");
 
-    // Get the current time
-    let currentDate = new Date();
-
-    // Generates the dates items
-    generateDates(startDateMenu, currentDate)
-    generateDates(dueDateMenu, currentDate)
-
-    // Regenerate the dates of due menu based on the selected start date
-    form.querySelector(".due-date-menu .dropdown-toggle").addEventListener("click", function (){
-        let startMenuIndex = form.querySelector(".start-date-menu .dropdown-toggle").getAttribute("value");
-        if(startMenuIndex === null) return;
-        dueDateMenu.innerHTML = "";
-        generateDates(dueDateMenu, currentDate, parseInt(startMenuIndex));
-    })
-
-    // Regenerate the dates of due menu based on the selected start date
-    form.querySelectorAll(".start-date-menu .dropdown-item").forEach(function (item){
-        item.addEventListener("click", function (){
-            let dueMenuBtn = form.querySelector(".due-date-menu .dropdown-toggle");
-            let startMenuIndex = form.querySelector(".start-date-menu .dropdown-toggle").getAttribute("value");
-            let dueMenuIndex = dueMenuBtn.getAttribute("value");
-            
-            if(dueMenuIndex === null || startMenuIndex === null || startMenuIndex  <= dueMenuIndex) return;
-
-
-            dueMenuBtn.textContent = "Due Date";
-            dueMenuBtn.removeAttribute("value");
-        })
-    })
-
-    // Generate the date items in the menu
-    function generateDates(dateMenu, currentDate, skip = 0) {
-        for (let i = 0 + skip; i < 100; i++) {
-            let date = new Date(currentDate);
-            date.setDate(date.getDate() + i);
-            date = date.toLocaleDateString('en-US', 
-                { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'Africa/Casablanca' }
-            );
-
-            let item = document.createElement('button');
-            item.setAttribute("value", i);
-            item.classList.add("dropdown-item");
-            item.textContent = date;
-
-            dateMenu.append(item);
+    startDateInput.addEventListener("change", function() {
+        dueDateInput.min = startDateInput.value;
+        
+        if (dueDateInput.value && (new Date(startDateInput.value) > new Date(dueDateInput.value))) {
+            dueDateInput.value = "";
         }
+    })
 
-        document.querySelectorAll(".dropdown-item").forEach(function (item) {
-            item.addEventListener('click', markMenuOptionAsSelected);
-        })
-    }
-    
-    // Show the selected date on the select button
-    function markMenuOptionAsSelected (event) {
-        event.preventDefault();
-        let selectedItem = event.target;
-        let selectBtn = getSelectBtnFromItemMenu(event);
-        selectBtn.textContent = selectedItem.textContent;
-        selectBtn.setAttribute("value", selectedItem.getAttribute("value"))
-    }
-    function getSelectBtnFromItemMenu (event) {
-        return event.target.parentElement.parentElement.querySelector(".dropdown-toggle");
-    }
+    // Show the selected option (priority, state) on the select button
+    document.querySelectorAll(".dropdown-item").forEach(function (item) {
+        item.addEventListener('click', function(event) {
+            event.preventDefault();
+            let selectedItem = event.target;
+            let selectBtn = event.target.parentElement.parentElement.querySelector(".dropdown-toggle");
+            selectBtn.textContent = selectedItem.textContent;
+            selectBtn.setAttribute("value", selectedItem.getAttribute("value"));
+        });
+    })
+}
+
+function showAlert() {
+    alert.classList.remove("d-none");
+}
+function hideAlert() {
+    alert.classList.add("d-none");
 }
