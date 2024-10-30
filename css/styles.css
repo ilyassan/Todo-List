@@ -13,7 +13,8 @@ body {
     min-height: 100vh;
 }
 
-#create-task-popup {
+#create-task-popup,
+#task-details {
     position: absolute;
     left: 0;
     right: 0;
@@ -25,6 +26,11 @@ body {
     justify-content: center;
     align-items: flex-start;
 }
+#task-details input.title{
+    font-size: 1.75rem;
+    font-weight: bold;
+}
+
 
 .dropdown-menu {
     max-height: 200px;
