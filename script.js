@@ -1,20 +1,9 @@
-let addSingleTaskBtn = document.getElementById("add-task");
-let addMultipleTasksBtn = document.getElementById("add-multiple-tasks");
 let searchInput = document.getElementById("search");
 
 let formPopup = document.getElementById("create-task-popup");
 
 updateListsTasksCount();
 
-addSingleTaskBtn.addEventListener("click", () => openAndClosePopup(true));
-addMultipleTasksBtn.addEventListener("click", () => openAndClosePopup(false));
-
-function openAndClosePopup (isSingle) {
-    formPopup.classList.remove("d-none");
-    if(isSingle){
-        document.getElementById("multiple-controll").classList.add("d-none")
-    }
-}
 
 searchInput.onkeyup = function () {
     showOnlyfilteredTasks(); // Show only tasks that match the current filter search
@@ -38,25 +27,70 @@ function createTask(data) {
                     data-description="${data.description}"
                     class="task border-${colors[data.priority]}"
                 >
-                    <h6 class="font-weight-light mb-3">${data.title}</h6>
+                    <h6 class="title-link font-weight-light mb-3">${data.title}</h6>
                     <div class="labels">
                         <button class="delete-btn btn btn-danger py-0">Delete</button>
-                        <button class="btn btn-warning py-0 text-white">Edit</button>
+                        <button class="edit-btn btn btn-warning py-0 text-white">Edit</button>
                     </div>
                 </div>`
 
     let listOfTasks = document.querySelectorAll(".list")[data.state].querySelector(".tasks");
-
     listOfTasks.insertAdjacentHTML("beforeend", task);
-    showOnlyfilteredTasks(); //  To hide the created task if didn't match the current filter search
-    updateListsTasksCount();
 
-    listOfTasks.querySelector(`#${taskId} .delete-btn`).addEventListener("click", () => deleteTask(taskId));
+    taskEvents(taskId);
 }
 
 function deleteTask(taskId) {
     document.getElementById(taskId).remove();
     updateListsTasksCount(); // Update the task count after deltete
+}
+
+function updateTask(data) {
+    let task = document.getElementById(data.id);
+
+    let colors = {
+        P1: "danger",
+        P2: "secondary",
+        P3: "info",
+    };
+    
+    let tempDiv = document.createElement("div");
+    tempDiv.innerHTML = `<div
+                    id="${data.id}"
+                    data-start-date="${data.startDate}"
+                    data-due-date="${data.dueDate}"
+                    data-priority="${data.priority}"
+                    data-state="${data.state}"
+                    data-description="${data.description}"
+                    class="task border-${colors[data.priority]}"
+                >
+                    <h6 class="title-link font-weight-light mb-3">${data.title}</h6>
+                    <div class="labels">
+                        <button class="delete-btn btn btn-danger py-0">Delete</button>
+                        <button class="edit-btn btn btn-warning py-0 text-white">Edit</button>
+                    </div>
+                </div>`;
+
+    
+    if (task.getAttribute("data-state") == data.state) {
+        // Replace the old task with the newly created DOM element
+        task.replaceWith(tempDiv.firstElementChild);
+    }else {
+        task.remove();
+        let listOfTasks = document.querySelectorAll(".list")[data.state].querySelector(".tasks");
+        listOfTasks.appendChild(tempDiv.firstElementChild);
+    }
+
+    taskEvents(data.id);
+}
+
+function taskEvents(taskId) {
+    showOnlyfilteredTasks(); //  To hide the created task if didn't match the current filter search
+    let task = document.querySelector(`#${taskId}`);
+    task.querySelector(`.delete-btn`).addEventListener("click", () => deleteTask(taskId));
+    task.querySelector(`.title-link`).addEventListener("click", () => showTaskDetailsPopup(task));
+    task.querySelector(`.edit-btn`).addEventListener("click", () => showTaskDetailsPopup(task));
+    updateListsTasksCount();
 }
 
 function showOnlyfilteredTasks() {
