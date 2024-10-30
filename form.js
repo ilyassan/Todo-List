@@ -3,7 +3,7 @@ let formsContainer = document.getElementById("forms");
 let newFormBtn = document.getElementById("addFormBtn");
 let removeFormBtn = document.getElementById("removeFormBtn");
 let saveBtn = document.getElementById("saveBtn");
-let alert = document.getElementById("alert");
+let alert = popup.querySelector(".alert");
 let addSingleTaskBtn = document.getElementById("add-task");
 let addMultipleTasksBtn = document.getElementById("add-multiple-tasks");
 

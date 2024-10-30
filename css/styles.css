@@ -26,11 +26,24 @@ body {
     justify-content: center;
     align-items: flex-start;
 }
-#task-details input.title{
-    font-size: 1.75rem;
-    font-weight: bold;
-}
+#task-details {
+    overflow: hidden;
 
+    & form {
+        position: absolute;
+        min-width: 90%;
+        right: -100%;
+        transition: right 500ms ease-in-out;
+
+        &.show {
+            right: 0;
+        }
+    }
+    & input.title{
+        font-size: 1.75rem;
+        font-weight: bold;
+    }
+}
 
 .dropdown-menu {
     max-height: 200px;
@@ -45,8 +58,13 @@ body {
     padding: .75rem 1rem;
     margin-bottom: 1.3rem;
 
-    & h6 {
+    & .title-link {
+        cursor: pointer;
         color: rgba(0, 0, 0, .7);
         word-break: break-all;
+
+        &:hover {
+            text-decoration: underline;
+        }
     }
 }
