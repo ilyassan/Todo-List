@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>To-Do List</title>
+        <link rel="stylesheet" href="css/all.min.css">
+        <link rel="stylesheet" href="css/fontawesome.min.css">
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/styles.css">
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+    </head>
+<body>
+    
+    <div id="task-details">
+        <form class="bg-white container p-4 my-5">
+            <div class="form-group mb-3">
+                <label class="h5">Title:</label>
+                <input type="text" value="Planification" name="title" class="title form-control bg-light shadow-none">
+            </div>
+
+            <div class="form-group mb-4">
+                <label class="h5">Description:</label>
+                <textarea class="description form-control bg-light shadow-none" rows="4">xmsjqkfjmq</textarea>
+            </div>
+
+            <div class="form-group mb-3">
+                <div class="row">
+                    <div class="start-date-menu dropdown col-2">
+                        <button style="width: 110px;" class="btn btn-sm btn-white border border-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Start Date
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        </div>
+                    </div>
+                    <div class="due-date-menu dropdown col-2">
+                        <button style="width: 110px;" class="btn btn-sm btn-white border border-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Due Date
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group mb-4">
+                <div class="row">
+                    <div class="priority-menu dropdown col-2">
+                        <button style="width: 110px;" class="btn btn-sm btn-white border border-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Priority
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                          <button value="0" class="dropdown-item">P1</button>
+                          <button value="1" class="dropdown-item">P2</button>
+                          <button value="2" class="dropdown-item">P3</button>
+                        </div>
+                    </div>
+                    <div class="state-menu dropdown col-2">
+                        <button style="width: 110px;" class="btn btn-sm btn-white border border-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          State
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                          <button value="0" class="dropdown-item">To Do</button>
+                          <button value="1" class="dropdown-item">Doing</button>
+                          <button value="2" class="dropdown-item">Completed</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button id="saveBtn" class="btn btn-success w-fit px-3">Save</button>
+        </form>
+    </div>
+
+</body>
+</html>
