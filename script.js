@@ -1,6 +1,4 @@
-let searchInput = document.getElementById("search");
-
-let formPopup = document.getElementById("create-task-popup");
+const searchInput = document.getElementById("search");
 
 loadTasksFromLocalStorage();
 updateListsTasksCount();
@@ -12,33 +10,13 @@ searchInput.onkeyup = function () {
 }
 
 function createTask(data, isFromLocalStorage = false) {
-    let colors = {
-        P1: "danger",
-        P2: "secondary",
-        P3: "info",
-    };
     
     if (! isFromLocalStorage) {
-
         let taskId = `task-${Date.now()}`
         data.id = taskId;
     }
 
-    let task = `<div
-                    id="${data.id}"
-                    data-start-date="${data.startDate}"
-                    data-due-date="${data.dueDate}"
-                    data-priority="${data.priority}"
-                    data-state="${data.state}"
-                    data-description="${data.description}"
-                    class="task border-${colors[data.priority]}"
-                >
-                    <h6 class="title-link font-weight-light mb-3">${data.title}</h6>
-                    <div class="labels">
-                        <button class="delete-btn btn btn-danger py-0">Delete</button>
-                        <button class="edit-btn btn btn-warning py-0 text-white">Edit</button>
-                    </div>
-                </div>`
+    let task = getHtmlTaskElement(data);
 
     let listOfTasks = document.querySelectorAll(".list")[data.state].querySelector(".tasks");
     listOfTasks.insertAdjacentHTML("beforeend", task);
@@ -59,28 +37,8 @@ function deleteTask(taskId) {
 function updateTask(data) {
     let task = document.getElementById(data.id);
 
-    let colors = {
-        P1: "danger",
-        P2: "secondary",
-        P3: "info",
-    };
-    
     let tempDiv = document.createElement("div");
-    tempDiv.innerHTML = `<div
-                    id="${data.id}"
-                    data-start-date="${data.startDate}"
-                    data-due-date="${data.dueDate}"
-                    data-priority="${data.priority}"
-                    data-state="${data.state}"
-                    data-description="${data.description}"
-                    class="task border-${colors[data.priority]}"
-                >
-                    <h6 class="title-link font-weight-light mb-3">${data.title}</h6>
-                    <div class="labels">
-                        <button class="delete-btn btn btn-danger py-0">Delete</button>
-                        <button class="edit-btn btn btn-warning py-0 text-white">Edit</button>
-                    </div>
-                </div>`;
+    tempDiv.innerHTML = getHtmlTaskElement(data);
 
     
     if (task.getAttribute("data-state") == data.state) {
@@ -151,6 +109,30 @@ function taskEvents(taskId) {
     task.querySelector(`.title-link`).addEventListener("click", () => showTaskDetailsPopup(task));
     task.querySelector(`.edit-btn`).addEventListener("click", () => showTaskDetailsPopup(task));
     updateListsTasksCount();
+}
+
+function getHtmlTaskElement(data) {
+    let colors = {
+        P1: "danger",
+        P2: "secondary",
+        P3: "info",
+    };
+
+    return `<div
+                id="${data.id}"
+                data-start-date="${data.startDate}"
+                data-due-date="${data.dueDate}"
+                data-priority="${data.priority}"
+                data-state="${data.state}"
+                data-description="${data.description}"
+                class="task border-${colors[data.priority]}"
+            >
+                <h6 class="title-link font-weight-light mb-3">${data.title}</h6>
+                <div class="labels">
+                    <button class="delete-btn btn btn-danger py-0">Delete</button>
+                    <button class="edit-btn btn btn-warning py-0 text-white">Edit</button>
+                </div>
+            </div>`
 }
 
 function showOnlyfilteredTasks() {

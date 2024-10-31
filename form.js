@@ -1,17 +1,17 @@
-let popup = document.getElementById("create-task-popup");
-let formsContainer = document.getElementById("forms");
-let newFormBtn = document.getElementById("addFormBtn");
-let removeFormBtn = document.getElementById("removeFormBtn");
-let saveBtn = document.getElementById("saveBtn");
-let alert = popup.querySelector(".alert");
-let addSingleTaskBtn = document.getElementById("add-task");
-let addMultipleTasksBtn = document.getElementById("add-multiple-tasks");
+const popup = document.getElementById("create-task-popup");
+const formsContainer = document.getElementById("forms");
+const newFormBtn = document.getElementById("addFormBtn");
+const removeFormBtn = document.getElementById("removeFormBtn");
+const saveBtn = document.getElementById("saveBtn");
+const alert = popup.querySelector(".alert");
+const addSingleTaskBtn = document.getElementById("add-task");
+const addMultipleTasksBtn = document.getElementById("add-multiple-tasks");
 
 addSingleTaskBtn.addEventListener("click", () => openPopup(true));
 addMultipleTasksBtn.addEventListener("click", () => openPopup(false));
 
 function openPopup (isSingle) {
-    formPopup.classList.remove("d-none");
+    popup.classList.remove("d-none");
     let controllMultiple = document.getElementById("multiple-controll");
 
     if(isSingle){ // If user will add only 1 task.
@@ -32,7 +32,7 @@ popup.addEventListener("click", function(event) {
     let closeBtn = document.querySelector("#closeIcon span");
 
     if (event.target == popup || event.target == closeBtn) {
-        formPopup.classList.add("d-none");
+        popup.classList.add("d-none");
         hideAlert();
         document.getElementById("multiple-controll").classList.remove("d-none");
     }

@@ -1,6 +1,6 @@
-let taskDetailsPopup = document.getElementById("task-details");
-let detailsForm = taskDetailsPopup.querySelector("form");
-let detailsFormAlert = taskDetailsPopup.querySelector(".alert");
+const taskDetailsPopup = document.getElementById("task-details");
+const detailsForm = taskDetailsPopup.querySelector("form");
+const detailsFormAlert = taskDetailsPopup.querySelector(".alert");
 
 applyFormEvents(detailsForm);
 
@@ -20,7 +20,6 @@ taskDetailsPopup.addEventListener("click", function(event) {
         hideTaskDetailsPopup();
     }
 })
-
 
 function hideTaskDetailsPopup() {
     detailsForm.classList.remove("show");

@@ -64,6 +64,7 @@ body {
         word-break: break-all;
 
         &:hover {
+            color: rgb(25, 94, 255);
             text-decoration: underline;
         }
     }
