@@ -93,6 +93,7 @@ function updateTask(data) {
     }
 
     taskEvents(data.id);
+    updateTaskInLocalStorage(data);
 }
 
 function loadTasksFromLocalStorage() {
@@ -123,6 +124,19 @@ function deleteTaskFromLocalStorage(taskId) {
     for(let i = 0; i < tasks.length ; i++) {
         if(tasks[i].id == taskId){
             tasks.splice(i, 1)
+            break;
+        }
+    }
+    
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+function updateTaskInLocalStorage(data) {
+    let tasks = JSON.parse(localStorage.getItem("tasks"));
+
+    for(let i = 0; i < tasks.length ; i++) {
+        if(tasks[i].id == data.id){
+            tasks[i] = data;
             break;
         }
     }
