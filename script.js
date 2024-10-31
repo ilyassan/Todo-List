@@ -52,6 +52,7 @@ function createTask(data, isFromLocalStorage = false) {
 
 function deleteTask(taskId) {
     document.getElementById(taskId).remove();
+    deleteTaskFromLocalStorage(taskId);
     updateListsTasksCount(); // Update the task count after deltete
 }
 
@@ -113,6 +114,19 @@ function storeTaskInLocalStorage(data) {
 
     tasks.push(data);
 
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+function deleteTaskFromLocalStorage(taskId) {
+    let tasks = JSON.parse(localStorage.getItem("tasks"));
+
+    for(let i = 0; i < tasks.length ; i++) {
+        if(tasks[i].id == taskId){
+            tasks.splice(i, 1)
+            break;
+        }
+    }
+    
     localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
