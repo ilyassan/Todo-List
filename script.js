@@ -2,6 +2,7 @@ let searchInput = document.getElementById("search");
 
 let formPopup = document.getElementById("create-task-popup");
 
+loadTasksFromLocalStorage();
 updateListsTasksCount();
 
 
@@ -10,16 +11,21 @@ searchInput.onkeyup = function () {
     updateListsTasksCount(); // Update the lists tasks count based on the new filter
 }
 
-function createTask(data) {
+function createTask(data, isFromLocalStorage = false) {
     let colors = {
         P1: "danger",
         P2: "secondary",
         P3: "info",
     };
     
-    let taskId = `task-${Date.now()}`
+    if (! isFromLocalStorage) {
+
+        let taskId = `task-${Date.now()}`
+        data.id = taskId;
+    }
+
     let task = `<div
-                    id="${taskId}"
+                    id="${data.id}"
                     data-start-date="${data.startDate}"
                     data-due-date="${data.dueDate}"
                     data-priority="${data.priority}"
@@ -37,11 +43,16 @@ function createTask(data) {
     let listOfTasks = document.querySelectorAll(".list")[data.state].querySelector(".tasks");
     listOfTasks.insertAdjacentHTML("beforeend", task);
 
-    taskEvents(taskId);
+    taskEvents(data.id);
+
+    if (! isFromLocalStorage) {
+        storeTaskInLocalStorage(data);
+    }
 }
 
 function deleteTask(taskId) {
     document.getElementById(taskId).remove();
+    deleteTaskFromLocalStorage(taskId);
     updateListsTasksCount(); // Update the task count after deltete
 }
 
@@ -82,6 +93,55 @@ function updateTask(data) {
     }
 
     taskEvents(data.id);
+    updateTaskInLocalStorage(data);
+}
+
+function loadTasksFromLocalStorage() {
+    let tasks = JSON.parse(localStorage.getItem("tasks"));
+
+    if(! tasks) return;
+
+    for(let taskData of tasks) {
+        createTask(taskData, true);
+    }
+}
+
+function storeTaskInLocalStorage(data) {
+    let tasks = JSON.parse(localStorage.getItem("tasks"));
+
+    if (! tasks) {
+        tasks = [];
+    }
+
+    tasks.push(data);
+
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+function deleteTaskFromLocalStorage(taskId) {
+    let tasks = JSON.parse(localStorage.getItem("tasks"));
+
+    for(let i = 0; i < tasks.length ; i++) {
+        if(tasks[i].id == taskId){
+            tasks.splice(i, 1)
+            break;
+        }
+    }
+    
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+function updateTaskInLocalStorage(data) {
+    let tasks = JSON.parse(localStorage.getItem("tasks"));
+
+    for(let i = 0; i < tasks.length ; i++) {
+        if(tasks[i].id == data.id){
+            tasks[i] = data;
+            break;
+        }
+    }
+    
+    localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
 function taskEvents(taskId) {
