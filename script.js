@@ -2,6 +2,7 @@ let searchInput = document.getElementById("search");
 
 let formPopup = document.getElementById("create-task-popup");
 
+loadTasksFromLocalStorage();
 updateListsTasksCount();
 
 
@@ -10,15 +11,18 @@ searchInput.onkeyup = function () {
     updateListsTasksCount(); // Update the lists tasks count based on the new filter
 }
 
-function createTask(data) {
+function createTask(data, isFromLocalStorage = false) {
     let colors = {
         P1: "danger",
         P2: "secondary",
         P3: "info",
     };
     
-    let taskId = `task-${Date.now()}`
-    data.id = taskId;
+    if (! isFromLocalStorage) {
+
+        let taskId = `task-${Date.now()}`
+        data.id = taskId;
+    }
 
     let task = `<div
                     id="${data.id}"
@@ -39,9 +43,11 @@ function createTask(data) {
     let listOfTasks = document.querySelectorAll(".list")[data.state].querySelector(".tasks");
     listOfTasks.insertAdjacentHTML("beforeend", task);
 
-    taskEvents(taskId);
+    taskEvents(data.id);
 
-    storeTaskInLocalStorage(data);
+    if (! isFromLocalStorage) {
+        storeTaskInLocalStorage(data);
+    }
 }
 
 function deleteTask(taskId) {
@@ -86,6 +92,16 @@ function updateTask(data) {
     }
 
     taskEvents(data.id);
+}
+
+function loadTasksFromLocalStorage() {
+    let tasks = JSON.parse(localStorage.getItem("tasks"));
+
+    if(! tasks) return;
+
+    for(let taskData of tasks) {
+        createTask(taskData, true);
+    }
 }
 
 function storeTaskInLocalStorage(data) {
