@@ -18,8 +18,10 @@ function createTask(data) {
     };
     
     let taskId = `task-${Date.now()}`
+    data.id = taskId;
+
     let task = `<div
-                    id="${taskId}"
+                    id="${data.id}"
                     data-start-date="${data.startDate}"
                     data-due-date="${data.dueDate}"
                     data-priority="${data.priority}"
@@ -38,6 +40,8 @@ function createTask(data) {
     listOfTasks.insertAdjacentHTML("beforeend", task);
 
     taskEvents(taskId);
+
+    storeTaskInLocalStorage(data);
 }
 
 function deleteTask(taskId) {
@@ -82,6 +86,18 @@ function updateTask(data) {
     }
 
     taskEvents(data.id);
+}
+
+function storeTaskInLocalStorage(data) {
+    let tasks = JSON.parse(localStorage.getItem("tasks"));
+
+    if (! tasks) {
+        tasks = [];
+    }
+
+    tasks.push(data);
+
+    localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
 function taskEvents(taskId) {
