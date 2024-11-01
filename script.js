@@ -4,11 +4,25 @@ const prioritySelect = document.getElementById("priority");
 loadTasksFromLocalStorage();
 updateListsTasksCount();
 
-
 searchInput.addEventListener("keyup", () => filterTasks());
 
 prioritySelect.querySelectorAll(".dropdown-menu button").forEach(function(option) {
     option.addEventListener("click", () => filterTasks(option.textContent));
+})
+
+document.querySelectorAll(".order-by-date").forEach(function(btn) {
+    let list = btn.parentElement.parentElement;
+    sortListByDate(list, btn.getAttribute("data-order"));
+
+    btn.addEventListener("click", function() {
+        let newOrder = btn.getAttribute("data-order") == "asc" ? "desc" : "asc";
+        sortListByDate(list, newOrder);
+        btn.setAttribute("data-order", newOrder);
+
+        let icon = list.querySelector(".order-by-date i");
+        icon.classList.toggle("fa-arrow-up-wide-short");
+        icon.classList.toggle("fa-arrow-down-wide-short");
+    });
 })
 
 function createTask(data, isFromLocalStorage = false) {
@@ -111,6 +125,9 @@ function taskEvents(taskId) {
     task.querySelector(`.title-link`).addEventListener("click", () => showTaskDetailsPopup(task));
     task.querySelector(`.edit-btn`).addEventListener("click", () => showTaskDetailsPopup(task));
     updateListsTasksCount();
+
+    let list = task.parentElement.parentElement;
+    sortListByDate(list, list.querySelector(".order-by-date").getAttribute("data-order"));
 }
 
 function getHtmlTaskElement(data) {
@@ -181,4 +198,22 @@ function filterTasks(priority = "All") {
     })
 
     updateListsTasksCount(); // Update the lists tasks count based on the new filter
+}
+
+function sortListByDate(list, order) {
+    const tasks = Array.from(list.querySelectorAll(".task"));
+
+    for (let i = 0; i < tasks.length - 1; i++) {
+        for (let j = 0; j < tasks.length - i - 1; j++) {
+            const dateA = new Date(tasks[j].getAttribute("data-due-date"));
+            const dateB = new Date(tasks[j + 1].getAttribute("data-due-date"));
+            const shouldSwap = order === "asc" ? dateA > dateB : dateA < dateB;
+
+            if (shouldSwap) {
+                [tasks[j], tasks[j + 1]] = [tasks[j + 1], tasks[j]];
+            }
+        }
+    }
+
+    tasks.forEach(task => list.insertBefore(task, null)); // Moves each element to its new position
 }
