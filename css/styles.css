@@ -8,6 +8,17 @@
     width: fit-content;
 }
 
+@media (max-width: 994px) {
+    html {
+        font-size: 13px;
+    }
+}
+@media (max-width: 776px) {
+    html {
+        font-size: 10px;
+    }
+}
+
 body {
     position: relative;
     min-height: 100vh;
@@ -26,6 +37,20 @@ body {
     justify-content: center;
     align-items: flex-start;
 }
+#create-task-popup > div {
+    width: 60%;
+}
+@media (max-width: 994px) {
+    #create-task-popup > div {
+        width: 75%;
+    }
+}
+@media (max-width: 500px) {
+    #create-task-popup > div {
+        width: 95%;
+    }
+}
+
 #task-details {
     overflow: hidden;
 
@@ -51,11 +76,26 @@ body {
     overflow-x: hidden;
 }
 
+.list-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+@media (max-width: 767px) {
+    .tasks-controll {
+        row-gap: 1rem;
+        flex-direction: row-reverse;
+        & #add-task {
+            order: 1;
+        }
+    }
+}
+
 .task {
     border-radius: .35rem;
     border: 1px solid;
     border-left-width: 7.5px;
-    padding: .75rem 1rem;
+    padding: .75rem;
     margin-bottom: 1.3rem;
 
     & .title-link {
