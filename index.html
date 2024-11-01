@@ -12,7 +12,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 </head>
 <body>
-    <div id="create-task-popup" class="d-none">
+    <div id="create-task-popup" style="z-index: 1;" class="d-none">
         <div class="p-4 pt-1 rounded my-5 bg-white">
             <div id="closeIcon" class="d-flex justify-content-end"><span role="button" class="text-secondary h3">x</span></div>
             <p class="d-none alert alert-danger text-center py-1">Please fill all the fields.</p>
@@ -71,7 +71,7 @@
         </div>
     </div>
 
-    <div id="task-details" class="d-none">
+    <div id="task-details" style="z-index: 1;" class="d-none">
         <form class="bg-white container p-4 my-5 rounded">
             <p class="d-none alert alert-danger text-center py-1">Incorrect data.</p>
             <input type="hidden" class="id d-none">
@@ -126,8 +126,19 @@
         <div class="row tasks-controll w-full m-auto mt-4 d-flex justify-content-between">
             <button id="add-task" style="height: 2.7rem;" class="col-3 col-md-2 btn btn-primary d-flex justify-content-center align-items-center p-0 gap-1">Add Task <span class="h1">+</span></button>
 
-            <div class="col-md-7 col-12 p-0">
-                <input id="search" type="text" class="form-control h-100 bg-light" placeholder="Search by title...">
+            <div class="col-md-7 col-12 p-0 d-flex align-items-center justify-content-between">
+                <input style="width: 85%;" id="search" type="text" class="form-control h-100 bg-light" placeholder="Search by title...">
+                <div id="priority" class="dropdown">
+                    <button class="w-100 btn btn-sm btn-white border border-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" value="0">
+                      All
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <button value="0" class="dropdown-item">All</button>
+                      <button value="1" class="dropdown-item">P1</button>
+                      <button value="2" class="dropdown-item">P2</button>
+                      <button value="3" class="dropdown-item">P3</button>
+                    </div>
+                </div>
             </div>
             
             <button id="add-multiple-tasks" style="height: 2.7rem;" class="col-3 col-md-2 btn btn-primary d-flex justify-content-center align-items-center p-0 gap-1">Add Multiple <span class="h1">+</span></button>
