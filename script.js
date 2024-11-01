@@ -4,11 +4,25 @@ const prioritySelect = document.getElementById("priority");
 loadTasksFromLocalStorage();
 updateListsTasksCount();
 
-
 searchInput.addEventListener("keyup", () => filterTasks());
 
 prioritySelect.querySelectorAll(".dropdown-menu button").forEach(function(option) {
     option.addEventListener("click", () => filterTasks(option.textContent));
+})
+
+document.querySelectorAll(".order-by-date").forEach(function(btn) {
+    let list = btn.parentElement.parentElement;
+    sortListByDate(list, btn.getAttribute("data-order"));
+
+    btn.addEventListener("click", function() {
+        let newOrder = btn.getAttribute("data-order") == "asc" ? "desc" : "asc";
+        sortListByDate(list, newOrder);
+        btn.setAttribute("data-order", newOrder);
+
+        let icon = list.querySelector(".order-by-date i");
+        icon.classList.toggle("fa-arrow-up-wide-short");
+        icon.classList.toggle("fa-arrow-down-wide-short");
+    });
 })
 
 function createTask(data, isFromLocalStorage = false) {
@@ -181,4 +195,16 @@ function filterTasks(priority = "All") {
     })
 
     updateListsTasksCount(); // Update the lists tasks count based on the new filter
+}
+
+function sortListByDate(list, order) {
+    const tasks = Array.from(list.querySelectorAll(".task"));
+
+    tasks.sort((a, b) => {
+        const dateA = new Date(a.getAttribute("data-due-date"));
+        const dateB = new Date(b.getAttribute("data-due-date"));
+        return order == "asc" ? dateA - dateB : dateB - dateA;
+    });
+
+    tasks.forEach(task => list.insertBefore(task, null)); // Moves each element to its new position
 }
