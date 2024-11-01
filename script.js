@@ -120,6 +120,8 @@ function getHtmlTaskElement(data) {
         P3: "info",
     };
 
+    let priorityColor = colors[data.priority];
+
     return `<div
                 id="${data.id}"
                 data-start-date="${data.startDate}"
@@ -127,12 +129,18 @@ function getHtmlTaskElement(data) {
                 data-priority="${data.priority}"
                 data-state="${data.state}"
                 data-description="${data.description}"
-                class="task border-${colors[data.priority]}"
+                class="task border-${priorityColor}"
             >
                 <h6 class="title-link font-weight-light mb-3">${data.title}</h6>
-                <div class="labels">
-                    <button class="delete-btn btn btn-danger py-0">Delete</button>
-                    <button class="edit-btn btn btn-warning py-0 text-white">Edit</button>
+                <div class="labels d-flex justify-content-between">
+                    <div class="d-flex gap-3 align-items-center">
+                        <span style="font-size: .75rem; width: 1.5rem; height: 1.5rem;" class="d-flex justify-content-center align-items-center text-white bg-${priorityColor} rounded-circle">${data.priority}</span>
+                        <span class="text-muted">${data.dueDate}</span>
+                    </div>
+                    <div class="d-flex gap-4 align-items-center">
+                        <span role="button" class="edit-btn text-warning py-0"><i class="fa-solid fa-pen-to-square"></i></span>
+                        <span role="button" class="delete-btn text-danger py-0"><i class="fa-solid fa-trash"></i></span>
+                    </div>
                 </div>
             </div>`
 }
