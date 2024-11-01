@@ -125,6 +125,9 @@ function taskEvents(taskId) {
     task.querySelector(`.title-link`).addEventListener("click", () => showTaskDetailsPopup(task));
     task.querySelector(`.edit-btn`).addEventListener("click", () => showTaskDetailsPopup(task));
     updateListsTasksCount();
+
+    let list = task.parentElement.parentElement;
+    sortListByDate(list, list.querySelector(".order-by-date").getAttribute("data-order"));
 }
 
 function getHtmlTaskElement(data) {
@@ -200,11 +203,17 @@ function filterTasks(priority = "All") {
 function sortListByDate(list, order) {
     const tasks = Array.from(list.querySelectorAll(".task"));
 
-    tasks.sort((a, b) => {
-        const dateA = new Date(a.getAttribute("data-due-date"));
-        const dateB = new Date(b.getAttribute("data-due-date"));
-        return order == "asc" ? dateA - dateB : dateB - dateA;
-    });
+    for (let i = 0; i < tasks.length - 1; i++) {
+        for (let j = 0; j < tasks.length - i - 1; j++) {
+            const dateA = new Date(tasks[j].getAttribute("data-due-date"));
+            const dateB = new Date(tasks[j + 1].getAttribute("data-due-date"));
+            const shouldSwap = order === "asc" ? dateA > dateB : dateA < dateB;
+
+            if (shouldSwap) {
+                [tasks[j], tasks[j + 1]] = [tasks[j + 1], tasks[j]];
+            }
+        }
+    }
 
     tasks.forEach(task => list.insertBefore(task, null)); // Moves each element to its new position
 }
