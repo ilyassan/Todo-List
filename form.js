@@ -42,9 +42,9 @@ const form = popup.querySelector("form");
 applyFormEvents(form);
 const emptyForm = form.cloneNode(true);
 
-newFormBtn.addEventListener("click", createNewForm)
-removeFormBtn.addEventListener("click", removeForm)
-saveBtn.addEventListener("click", submit)
+newFormBtn.addEventListener("click", createNewForm);
+removeFormBtn.addEventListener("click", removeForm);
+saveBtn.addEventListener("click", submit);
 
 
 function removeForm() {
@@ -82,8 +82,8 @@ function submit (){
 
 function getTaskData(form) {
     let data = {
-        title: form.querySelector(".title").value,
-        description: form.querySelector(".description").value,
+        title: form.querySelector(".title").value.trim(),
+        description: form.querySelector(".description").value.trim(),
         startDate: form.querySelector(".start-date-menu").value,
         dueDate: form.querySelector(".due-date-menu").value,
         priority: getValueFromMenu("priority-menu")?.textContent,

@@ -1,13 +1,15 @@
 const searchInput = document.getElementById("search");
+const prioritySelect = document.getElementById("priority");
 
 loadTasksFromLocalStorage();
 updateListsTasksCount();
 
 
-searchInput.onkeyup = function () {
-    showOnlyfilteredTasks(); // Show only tasks that match the current filter search
-    updateListsTasksCount(); // Update the lists tasks count based on the new filter
-}
+searchInput.addEventListener("keyup", () => filterTasks());
+
+prioritySelect.querySelectorAll(".dropdown-menu button").forEach(function(option) {
+    option.addEventListener("click", () => filterTasks(option.textContent));
+})
 
 function createTask(data, isFromLocalStorage = false) {
     
@@ -154,4 +156,21 @@ function updateListsTasksCount () {
                                     .filter(task => !task.classList.contains("d-none"))
                                     .length;
     })
+}
+
+// Filter by priority and search input
+function filterTasks(priority = "All") {
+    document.querySelectorAll(".task").forEach(function(task) {
+
+        let title = task.querySelector("h6").textContent.toLowerCase();
+        // Filtrer par priority || Filtrer par search
+        if((priority == "All" || task.getAttribute("data-priority") == priority) && title.search(searchInput.value.toLowerCase()) != -1){
+            task.classList.remove("d-none");
+            return;
+        }
+
+        task.classList.add("d-none");
+    })
+
+    updateListsTasksCount(); // Update the lists tasks count based on the new filter
 }

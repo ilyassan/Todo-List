@@ -12,8 +12,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 </head>
 <body>
-    <div id="create-task-popup" class="d-none">
-        <div class="w-50 p-4 pt-1 rounded my-5 bg-white">
+    <div id="create-task-popup" style="z-index: 1;" class="d-none">
+        <div class="p-4 pt-1 rounded my-5 bg-white">
             <div id="closeIcon" class="d-flex justify-content-end"><span role="button" class="text-secondary h3">x</span></div>
             <p class="d-none alert alert-danger text-center py-1">Please fill all the fields.</p>
             <div id="forms">
@@ -37,8 +37,8 @@
             
                     <div class="form-group mb-4">
                         <div class="row justify-content-between">
-                            <div class="priority-menu dropdown col-4">
-                                <button style="width: 110px;" class="btn btn-sm btn-white border border-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <div class="priority-menu dropdown col-3">
+                                <button class="w-100 btn btn-sm btn-white border border-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                   Priority
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -47,8 +47,8 @@
                                   <button value="2" class="dropdown-item">P3</button>
                                 </div>
                             </div>
-                            <div class="state-menu dropdown col-4">
-                                <button style="width: 110px;" class="btn btn-sm btn-white border border-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <div class="state-menu dropdown col-3">
+                                <button class="w-100 btn btn-sm btn-white border border-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                   State
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -71,7 +71,7 @@
         </div>
     </div>
 
-    <div id="task-details" class="d-none">
+    <div id="task-details" style="z-index: 1;" class="d-none">
         <form class="bg-white container p-4 my-5 rounded">
             <p class="d-none alert alert-danger text-center py-1">Incorrect data.</p>
             <input type="hidden" class="id d-none">
@@ -94,8 +94,8 @@
 
             <div class="form-group mb-4">
                 <div class="row">
-                    <div class="priority-menu dropdown col-2">
-                        <button style="width: 110px;" class="btn btn-sm btn-white border border-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <div class="priority-menu dropdown col-3 col-sm-2">
+                        <button class="w-100 btn btn-sm btn-white border border-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           Priority
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -104,8 +104,8 @@
                           <button value="2" class="dropdown-item">P3</button>
                         </div>
                     </div>
-                    <div class="state-menu dropdown col-2">
-                        <button style="width: 110px;" class="btn btn-sm btn-white border border-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <div class="state-menu dropdown col-3 col-sm-2">
+                        <button class="w-100 btn btn-sm btn-white border border-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           State
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -123,39 +123,50 @@
 
 
     <div class="container pt-3">
-        <div class="row mt-4">
-            <button id="add-task" style="height: 2.7rem;" class="col-2 btn btn-primary d-flex justify-content-center align-items-center py-0 gap-2">Add Task <span class="h1">+</span></button>
+        <div class="row tasks-controll w-full m-auto mt-4 d-flex justify-content-between">
+            <button id="add-task" style="height: 2.7rem;" class="col-3 col-md-2 btn btn-primary d-flex justify-content-center align-items-center p-0 gap-1">Add Task <span class="h1">+</span></button>
 
-            <div class="col-8">
-                <input id="search" type="text" class="form-control h-100 bg-light" placeholder="Search by title...">
+            <div class="col-md-7 col-12 p-0 d-flex align-items-center justify-content-between">
+                <input style="width: 85%;" id="search" type="text" class="form-control h-100 bg-light" placeholder="Search by title...">
+                <div id="priority" class="dropdown">
+                    <button class="w-100 btn btn-sm btn-white border border-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" value="0">
+                      All
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <button value="0" class="dropdown-item">All</button>
+                      <button value="1" class="dropdown-item">P1</button>
+                      <button value="2" class="dropdown-item">P2</button>
+                      <button value="3" class="dropdown-item">P3</button>
+                    </div>
+                </div>
             </div>
             
-            <button id="add-multiple-tasks" style="height: 2.7rem;" class="col-2 btn btn-primary d-flex justify-content-center align-items-center py-0 gap-2">Add Multiple <span class="h1">+</span></button>
+            <button id="add-multiple-tasks" style="height: 2.7rem;" class="col-3 col-md-2 btn btn-primary d-flex justify-content-center align-items-center p-0 gap-1">Add Multiple <span class="h1">+</span></button>
 
         </div>
 
         <div class="row mt-5">
-            <div class="list col-4 px-4">
+            <div class="list col-4">
                 <div class="d-flex align-items-center gap-2 pb-3 mb-4 border-bottom-2 border-danger">
-                    <span class="h4 mb-1">To Do</span><span class="text-secondary">|</span><span class="count">0</span>
+                    <span class="list-title mb-1">To Do</span><span class="text-secondary">|</span><span class="count">0</span>
                 </div>
 
                 <div class="tasks">
                 </div>
             </div>
 
-            <div class="list col-4 px-4">
+            <div class="list col-4">
                 <div class="d-flex align-items-center gap-2 pb-3 mb-4 border-bottom-2 border-warning">
-                    <span class="h4 mb-1">In Progress</span><span class="text-secondary">|</span><span class="count">0</span>
+                    <span class="list-title mb-1">Doing</span><span class="text-secondary">|</span><span class="count">0</span>
                 </div>
 
                 <div class="tasks">
                 </div>
             </div>
 
-            <div class="list col-4 px-4">
+            <div class="list col-4">
                 <div class="d-flex align-items-center gap-2 pb-3 mb-4 border-bottom-2 border-success">
-                    <span class="h4 mb-1">Done</span><span class="text-secondary">|</span><span class="count">0</span>
+                    <span class="list-title mb-1">Done</span><span class="text-secondary">|</span><span class="count">0</span>
                 </div>
 
                 <div class="tasks">
