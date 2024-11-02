@@ -21,7 +21,7 @@
             <div id="closeIcon" class="d-flex justify-content-end"><span role="button" class="text-secondary h3">x</span></div>
             <p class="d-none alert alert-danger text-center py-1">Please fill all the fields.</p>
             <div id="forms">
-                <form class="d-flex flex-column">
+                <form class="row d-flex flex-column">
                     <div class="form-group mb-3">
                         <label for="title">Title:</label>
                         <input type="text" name="title" class="title form-control h-100 bg-light shadow-none">    
@@ -32,16 +32,18 @@
                         <textarea class="description form-control bg-light shadow-none" rows="2"></textarea>
                     </div>
                     
-                    <div class="form-group mb-3">
-                        <input type="date" class="start-date-menu form-control">
+                    <div class="col-md-6 form-group mb-3">
+                        <label for="start-date">Start Date:</label>
+                        <input id="start-date" type="date" class="start-date-menu form-control">
                     </div>
-                    <div class="form-group mb-4">
-                        <input type="date" class="due-date-menu form-control">
+                    <div class="col-md-6 form-group mb-4">
+                        <label for="due-date">Due Date:</label>
+                        <input id="due-date" type="date" class="due-date-menu form-control">
                     </div>
             
                     <div class="form-group mb-4">
                         <div class="row justify-content-between">
-                            <div class="priority-menu dropdown col-3">
+                            <div class="priority-menu dropdown col-3 col-md-2 col-4k-3d2">
                                 <button class="w-100 btn btn-sm btn-white border border-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                   Priority
                                 </button>
@@ -51,7 +53,7 @@
                                   <button value="2" class="dropdown-item">P3</button>
                                 </div>
                             </div>
-                            <div class="state-menu dropdown col-3">
+                            <div class="state-menu dropdown col-3 col-md-2 col-4k-3d2">
                                 <button class="w-100 btn btn-sm btn-white border border-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                   State
                                 </button>
@@ -75,8 +77,8 @@
         </div>
     </div>
 
-    <div id="task-details" style="z-index: 1;" class="d-none">
-        <form class="bg-white container p-4 my-5 rounded">
+    <div id="task-details" style="z-index: 1;" class="row d-none">
+        <form class="col-12 col-sm-10 row bg-white container p-4 my-5 rounded">
             <p class="d-none alert alert-danger text-center py-1">Please fill all the fields.</p>
             <input type="hidden" class="id d-none">
             <div class="form-group mb-3">
@@ -89,10 +91,10 @@
                 <textarea class="description form-control bg-light shadow-none" rows="4">xmsjqkfjmq</textarea>
             </div>
 
-            <div class="form-group mb-3">
+            <div class="col-md-6 form-group mb-3">
                 <input type="date" class="start-date-menu form-control">
             </div>
-            <div class="form-group mb-4">
+            <div class="col-md-6 form-group mb-4">
                 <input type="date" class="due-date-menu form-control">
             </div>
 
@@ -130,8 +132,7 @@
         <div class="row tasks-controll w-full m-auto mt-4 d-flex justify-content-between">
             <button id="add-task" style="height: 2.7rem;" class="col-3 col-md-2 btn btn-primary d-flex justify-content-center align-items-center p-0 gap-1">Add Task <span class="h1">+</span></button>
 
-            <div class="col-md-7 col-12 p-0 d-flex align-items-center justify-content-between">
-                <input style="width: 85%;" id="search" type="text" class="form-control h-100 bg-light" placeholder="Search by title...">
+            <div class="col-md-6 col-12 p-0 d-flex align-items-center justify-content-between">
                 <div id="priority" class="dropdown">
                     <button class="w-100 btn btn-sm btn-white border border-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" value="0">
                       All
@@ -143,6 +144,7 @@
                       <button value="3" class="dropdown-item">P3</button>
                     </div>
                 </div>
+                <input style="width: 85%;" id="search" type="text" class="form-control h-100 bg-light" placeholder="Search by title...">
             </div>
             
             <button id="add-multiple-tasks" style="height: 2.7rem;" class="col-3 col-md-2 btn btn-primary d-flex justify-content-center align-items-center p-0 gap-1">Add Multiple <span class="h1">+</span></button>
