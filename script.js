@@ -176,13 +176,13 @@ function getHtmlTaskElement(data) {
                 style="cursor:grab"
                 draggable="true"
             >
-                <h6 class="title-link font-weight-light mb-3 w-fit">${data.title}</h6>
-                <div style="row-gap: 1rem;" class="row d-flex justify-content-between">
-                    <div class="col-12 col-sm-7 d-flex justify-content-between align-items-center">
+                <h6 class="title-link font-weight-light mb-4 w-fit">${data.title}</h6>
+                <div style="row-gap: .6rem;" class="row d-flex justify-content-between">
+                    <div class="col-12 col-sm-7 col-lg-6 col-xl-5 d-flex justify-content-between align-items-center">
                         <span style="font-size: .75rem; width: 1.5rem; height: 1.5rem;" class="d-flex justify-content-center align-items-center text-white bg-${priorityColor} rounded-circle">${data.priority}</span>
                         <span class="text-muted">${data.dueDate}</span>
                     </div>
-                    <div class="col-12 col-sm-4 d-flex justify-content-between align-items-center">
+                    <div class="col-12 col-sm-4 col-lg-3 d-flex justify-content-between align-items-center">
                         <span style="font-size: 1.2rem;" role="button" class="edit-btn text-warning py-0"><i class="fa-solid fa-pen-to-square"></i></span>
                         <span style="font-size: 1.2rem;" role="button" class="delete-btn text-danger py-0"><i class="fa-solid fa-trash"></i></span>
                     </div>
