@@ -124,9 +124,35 @@ function updateTaskInLocalStorage(data) {
 function taskEvents(taskId) {
     showOnlyfilteredTasks(); //  To hide the created task if didn't match the current filter search
     let task = document.querySelector(`#${taskId}`);
+
+    // Events for task
     task.querySelector(`.delete-btn`).addEventListener("click", () => deleteTask(taskId));
     task.querySelector(`.title-link`).addEventListener("click", () => showTaskDetailsPopup(task));
     task.querySelector(`.edit-btn`).addEventListener("click", () => showTaskDetailsPopup(task));
+
+    // Drag & Drop Logic
+    task.addEventListener("dragstart", function(e) {
+        e.dataTransfer.setData("text/plain", taskId);
+    });
+
+    const lists = document.querySelectorAll(".list");
+    lists.forEach((list, i) => {
+        list.addEventListener("dragover", function(e) {
+            e.preventDefault();
+        });
+        list.addEventListener("drop", function(e) {
+            e.preventDefault();
+            const droppedTaskId = e.dataTransfer.getData("text/plain");
+            let taskData = JSON.parse(localStorage.getItem("tasks")).find(task => task.id == droppedTaskId);
+            if (taskData.state != i) {
+                taskData.state = i;
+                updateTask(taskData);
+            }
+        });
+    });
+
+
+    // Update the lists counter
     updateListsTasksCount();
     
     let list = task.parentElement.parentElement;
@@ -150,8 +176,10 @@ function getHtmlTaskElement(data) {
                 data-state="${data.state}"
                 data-description="${data.description}"
                 class="task border-${priorityColor}"
+                style="cursor:grab"
+                draggable="true"
             >
-                <h6 class="title-link font-weight-light mb-3">${data.title}</h6>
+                <h6 class="title-link font-weight-light mb-3 w-fit">${data.title}</h6>
                 <div class="labels d-flex justify-content-between">
                     <div class="d-flex gap-3 align-items-center">
                         <span style="font-size: .75rem; width: 1.5rem; height: 1.5rem;" class="d-flex justify-content-center align-items-center text-white bg-${priorityColor} rounded-circle">${data.priority}</span>
