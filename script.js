@@ -8,7 +8,7 @@ updateListsTasksCount();
 searchInput.addEventListener("keyup", () => filterTasks());
 
 prioritySelect.querySelectorAll(".dropdown-menu button").forEach(function(option) {
-    option.addEventListener("click", () => filterTasks(option.textContent));
+    option.addEventListener("click", () => filterTasks());
 })
 
 document.querySelectorAll(".order-by-date").forEach(function(btn) {
@@ -122,7 +122,6 @@ function updateTaskInLocalStorage(data) {
 }
 
 function taskEvents(taskId) {
-    showOnlyfilteredTasks(); //  To hide the created task if didn't match the current filter search
     let task = document.querySelector(`#${taskId}`);
 
     // Events for task
@@ -150,13 +149,11 @@ function taskEvents(taskId) {
             }
         });
     });
-
-
-    // Update the lists counter
-    updateListsTasksCount();
     
     let list = task.parentElement.parentElement;
     sortListByDate(list, list.querySelector(".order-by-date").getAttribute("data-order"));
+
+    filterTasks(); //  To hide the created task if didn't match the current filter search
 }
 
 function getHtmlTaskElement(data) {
@@ -198,18 +195,6 @@ function getHtmlTaskElement(data) {
     return tempDiv.firstElementChild
 }
 
-function showOnlyfilteredTasks() {
-    document.querySelectorAll(".task").forEach(function(task) {
-        let title = task.querySelector("h6").textContent;
-
-        if (title.search(searchInput.value) == -1) { // If didn't match
-            task.classList.add("d-none");
-            return;
-        }
-        task.classList.remove("d-none");
-    })
-}
-
 function updateListsTasksCount () {
     document.querySelectorAll(".list").forEach( function (list) {
         let spanCount = list.querySelector(".count");
@@ -220,11 +205,15 @@ function updateListsTasksCount () {
 }
 
 // Filter by priority and search input
-function filterTasks(priority = "All") {
+function filterTasks(priority) {
+    if (! priority) {
+        priority = prioritySelect.querySelector(".dropdown-toggle").textContent.trim();
+    }
+
     document.querySelectorAll(".task").forEach(function(task) {
 
         let title = task.querySelector("h6").textContent.toLowerCase();
-        // Filtrer par priority || Filtrer par search
+        // Filter by priority || Filter by search
         if((priority == "All" || task.getAttribute("data-priority") == priority) && title.search(searchInput.value.toLowerCase()) != -1){
             task.classList.remove("d-none");
             return;
