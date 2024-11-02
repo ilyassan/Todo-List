@@ -25,6 +25,7 @@ function hideTaskDetailsPopup() {
     detailsForm.classList.remove("show");
     setTimeout(() => {
         taskDetailsPopup.classList.add("d-none");
+        hideDetailsAlert();
     }, 500);
 }
 
