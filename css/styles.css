@@ -70,6 +70,30 @@ body {
     }
 }
 
+#success-notification {
+    top: -10%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 1rem 2rem;
+    border-radius: 1rem;
+    transition: top 300ms ease-in-out;
+
+    &::after {
+        content: attr(data-message);
+        margin-left: 1rem;
+    }
+
+    & i {
+        width: 1.5rem;
+        height: 1.5rem;
+        padding: .2rem;
+    }
+
+    &.showAlert {
+        top: 1rem;
+    }
+}
+
 .dropdown-menu {
     max-height: 200px;
     overflow-y: auto;
