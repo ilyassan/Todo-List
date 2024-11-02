@@ -1,5 +1,6 @@
 const searchInput = document.getElementById("search");
 const prioritySelect = document.getElementById("priority");
+const notification = document.getElementById("success-notification");
 
 loadTasksFromLocalStorage();
 updateListsTasksCount();
@@ -35,12 +36,13 @@ function createTask(data, isFromLocalStorage = false) {
     let task = getHtmlTaskElement(data);
 
     let listOfTasks = document.querySelectorAll(".list")[data.state].querySelector(".tasks");
-    listOfTasks.insertAdjacentHTML("beforeend", task);
+    listOfTasks.appendChild(task);
 
     taskEvents(data.id);
 
     if (! isFromLocalStorage) {
         storeTaskInLocalStorage(data);
+        showNotification("Your task added successfully.")
     }
 }
 
@@ -48,26 +50,27 @@ function deleteTask(taskId) {
     document.getElementById(taskId).remove();
     deleteTaskFromLocalStorage(taskId);
     updateListsTasksCount(); // Update the task count after deltete
+
+    showNotification("Your task has been deleted successfully.");
 }
 
 function updateTask(data) {
     let task = document.getElementById(data.id);
 
-    let tempDiv = document.createElement("div");
-    tempDiv.innerHTML = getHtmlTaskElement(data);
-
+    let newTask = getHtmlTaskElement(data);
     
     if (task.getAttribute("data-state") == data.state) {
         // Replace the old task with the newly created DOM element
-        task.replaceWith(tempDiv.firstElementChild);
+        task.parentNode.replaceChild(newTask, task);
     }else {
         task.remove();
         let listOfTasks = document.querySelectorAll(".list")[data.state].querySelector(".tasks");
-        listOfTasks.appendChild(tempDiv.firstElementChild);
+        listOfTasks.appendChild(newTask);
     }
 
     taskEvents(data.id);
     updateTaskInLocalStorage(data);
+    showNotification("Your task has been updated successfully.");
 }
 
 function loadTasksFromLocalStorage() {
@@ -125,7 +128,7 @@ function taskEvents(taskId) {
     task.querySelector(`.title-link`).addEventListener("click", () => showTaskDetailsPopup(task));
     task.querySelector(`.edit-btn`).addEventListener("click", () => showTaskDetailsPopup(task));
     updateListsTasksCount();
-
+    
     let list = task.parentElement.parentElement;
     sortListByDate(list, list.querySelector(".order-by-date").getAttribute("data-order"));
 }
@@ -139,7 +142,7 @@ function getHtmlTaskElement(data) {
 
     let priorityColor = colors[data.priority];
 
-    return `<div
+    let task = `<div
                 id="${data.id}"
                 data-start-date="${data.startDate}"
                 data-due-date="${data.dueDate}"
@@ -160,6 +163,11 @@ function getHtmlTaskElement(data) {
                     </div>
                 </div>
             </div>`
+
+    let tempDiv = document.createElement("div");
+    tempDiv.innerHTML = task;
+
+    return tempDiv.firstElementChild
 }
 
 function showOnlyfilteredTasks() {
@@ -214,6 +222,17 @@ function sortListByDate(list, order) {
             }
         }
     }
+    
+    tasks.forEach(task => list.querySelector(".tasks").insertBefore(task, null)); // Moves each element to its new position
+}
 
-    tasks.forEach(task => list.insertBefore(task, null)); // Moves each element to its new position
+function showNotification(message) {
+    let showSeconds = 4;
+
+    notification.setAttribute("data-message", message);
+    notification.classList.add("showAlert");
+
+    setTimeout(() => {
+        notification.classList.remove("showAlert");
+    }, 1000 * showSeconds);
 }
