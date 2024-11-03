@@ -60,7 +60,7 @@ body {
 @media (max-width: 994px) {
     #create-task-popup > div {
         top: 10%;
-        width: 75%;
+        width: 65%;
     }
 }
 @media (max-width: 500px) {
