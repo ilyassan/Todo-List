@@ -12,7 +12,7 @@
 }
 
 @media (min-width: 1441px) {
-    .col-4k-3d2{
+    .col-4k-3d2 {
         width: calc(100% / 12 * 1.5);
     }
 }
