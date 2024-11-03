@@ -50,7 +50,7 @@ body {
     position: fixed;
     top: 5%;
     overflow-y: scroll;
-    max-height: 85%;
+    max-height: 87%;
     width: 60%;
 
     &::-webkit-scrollbar {
