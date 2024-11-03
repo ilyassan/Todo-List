@@ -159,9 +159,14 @@ function taskEvents(taskId) {
 function getHtmlTaskElement(data) {
     let colors = {
         P1: "danger",
-        P2: "secondary",
-        P3: "info",
+        P2: "orange",
+        P3: "success",
     };
+    // let colors = {
+    //     P1: "danger",
+    //     P2: "secondary",
+    //     P3: "info",
+    // };
 
     let priorityColor = colors[data.priority];
 
