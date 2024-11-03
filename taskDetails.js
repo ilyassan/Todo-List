@@ -77,9 +77,19 @@ function showDetailsPopup() {
 }
 
 function validatedEditedData(data) {
-    for (let value of Object.values(data)) {
+
+    let fieldNames = {
+        title: "Title",
+        description: "Description",
+        startDate: "Start Date",
+        dueDate: "Due Date",
+        priority: "Priority",
+        state: "State"
+    };
+
+    for (let [key, value] of Object.entries(data)) {
         if(! value){
-            showDetailsAlert();
+            showDetailsAlert(fieldNames[key]); // Show alert to fill the empty field
 
             document.querySelectorAll("input").forEach(function(input){
                 input.addEventListener("focus", hideDetailsAlert)
@@ -102,7 +112,8 @@ function editTask(data) {
     hideTaskDetailsPopup();
 }
 
-function showDetailsAlert() {
+function showDetailsAlert(fieldName) {
+    detailsFormAlert.textContent = `Please fill the ${fieldName} field`;
     detailsFormAlert.classList.remove("d-none");
 }
 function hideDetailsAlert() {

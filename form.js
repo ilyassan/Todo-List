@@ -98,9 +98,18 @@ function getTaskData(form) {
 }
 
 function validatedData(data) {
-    for (let value of Object.values(data)) {
+    let fieldNames = {
+        title: "Title",
+        description: "Description",
+        startDate: "Start Date",
+        dueDate: "Due Date",
+        priority: "Priority",
+        state: "State"
+    };
+
+    for (let [key, value] of Object.entries(data)) {
         if(! value){
-            showAlert();
+            showAlert(fieldNames[key]); // Show alert to fill the empty field
 
             document.querySelectorAll("input").forEach(function(input){
                 input.addEventListener("focus", hideAlert)
@@ -149,7 +158,8 @@ function applyFormEvents(form) {
     })
 }
 
-function showAlert() {
+function showAlert(fieldName) {
+    alert.textContent = `Please fill the ${fieldName} field`;
     alert.classList.remove("d-none");
 }
 function hideAlert() {
