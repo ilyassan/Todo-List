@@ -5,8 +5,10 @@ const notification = document.getElementById("success-notification");
 loadTasksFromLocalStorage();
 updateListsTasksCount();
 
+// Filter tasks on every input change
 searchInput.addEventListener("keyup", () => filterTasks());
 
+// Filter tasks when the user select new priority 
 prioritySelect.querySelectorAll(".dropdown-menu button").forEach(function(option) {
     option.addEventListener("click", () => filterTasks());
 })
@@ -26,6 +28,7 @@ document.querySelectorAll(".order-by-date").forEach(function(btn) {
     });
 })
 
+// --- Tasks CRUD Logic ---
 function createTask(data, isFromLocalStorage = false) {
     
     if (! isFromLocalStorage) {
@@ -72,7 +75,9 @@ function updateTask(data) {
     updateTaskInLocalStorage(data);
     showNotification("Your task has been updated successfully.");
 }
+// --- Tasks CRUD Logic End ---
 
+// --- Local Storage Functions ---
 function loadTasksFromLocalStorage() {
     let tasks = JSON.parse(localStorage.getItem("tasks"));
 
@@ -120,7 +125,9 @@ function updateTaskInLocalStorage(data) {
     
     localStorage.setItem("tasks", JSON.stringify(tasks));
 }
+// --- Local Storage Functions End ---
 
+// Implement events for a scpecify task
 function taskEvents(taskId) {
     let task = document.querySelector(`#${taskId}`);
 
@@ -234,6 +241,7 @@ function filterTasks(priority) {
     updateListsTasksCount(); // Update the lists tasks count based on the new filter
 }
 
+// Sort list tasks by due date
 function sortListByDate(list, order) {
     const tasks = Array.from(list.querySelectorAll(".task"));
 
@@ -252,6 +260,7 @@ function sortListByDate(list, order) {
     tasks.forEach(task => list.querySelector(".tasks").insertBefore(task, null)); // Moves each element to its new position
 }
 
+// Notify the user by a message
 function showNotification(message) {
     let showSeconds = 4;
 
