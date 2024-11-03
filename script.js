@@ -183,8 +183,8 @@ function getHtmlTaskElement(data) {
                         <span class="text-muted">${data.dueDate}</span>
                     </div>
                     <div class="col-12 col-sm-4 col-lg-3 d-flex justify-content-between align-items-center">
-                        <span style="font-size: 1.2rem;" role="button" class="edit-btn text-warning py-0"><i class="fa-solid fa-pen-to-square"></i></span>
-                        <span style="font-size: 1.2rem;" role="button" class="delete-btn text-danger py-0"><i class="fa-solid fa-trash"></i></span>
+                        <span style="font-size: 1.2rem;" aria-label="Edit task button" role="button" class="edit-btn text-warning py-0"><i class="fa-solid fa-pen-to-square"></i></span>
+                        <span style="font-size: 1.2rem;" aria-label="Delete task button" role="button" class="delete-btn text-danger py-0"><i class="fa-solid fa-trash"></i></span>
                     </div>
                 </div>
             </div>`
