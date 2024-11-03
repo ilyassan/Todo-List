@@ -249,7 +249,7 @@ function sortListByDate(list, order) {
         for (let j = 0; j < tasks.length - i - 1; j++) {
             const dateA = new Date(tasks[j].getAttribute("data-due-date"));
             const dateB = new Date(tasks[j + 1].getAttribute("data-due-date"));
-            const shouldSwap = order === "asc" ? dateA >= dateB : dateA <= dateB;
+            const shouldSwap = order === "asc" ? dateA >= dateB : dateA < dateB;
 
             if (shouldSwap) {
                 [tasks[j], tasks[j + 1]] = [tasks[j + 1], tasks[j]];
