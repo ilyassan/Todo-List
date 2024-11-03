@@ -218,8 +218,12 @@ function filterTasks(priority) {
     document.querySelectorAll(".task").forEach(function(task) {
 
         let title = task.querySelector("h6").textContent.toLowerCase();
+        let description = task.getAttribute("data-description").toLowerCase();
+
+        let searchInputValue = searchInput.value.toLowerCase();
+
         // Filter by priority || Filter by search
-        if((priority == "All" || task.getAttribute("data-priority") == priority) && title.search(searchInput.value.toLowerCase()) != -1){
+        if((priority == "All" || task.getAttribute("data-priority") == priority) && (title.search(searchInputValue) != -1 || description.search(searchInputValue) != -1)){
             task.classList.remove("d-none");
             return;
         }
