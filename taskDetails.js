@@ -2,9 +2,10 @@ const taskDetailsPopup = document.getElementById("task-details");
 const detailsForm = taskDetailsPopup.querySelector("form");
 const detailsFormAlert = taskDetailsPopup.querySelector(".alert");
 
+// Apply the events listeners for the form inputs
 applyFormEvents(detailsForm);
 
-detailsForm.onsubmit = function(event) {
+detailsForm.addEventListener("submit", function(event) {
     event.preventDefault();
 
     let data = getTaskData(detailsForm);
@@ -13,7 +14,7 @@ detailsForm.onsubmit = function(event) {
     if (! validatedEditedData(data)) return;
 
     editTask(data);
-}
+})
 
 taskDetailsPopup.addEventListener("click", function(event) {
     if(event.target == taskDetailsPopup){

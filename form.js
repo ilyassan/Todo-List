@@ -7,6 +7,7 @@ const alert = popup.querySelector(".alert");
 const addSingleTaskBtn = document.getElementById("add-task");
 const addMultipleTasksBtn = document.getElementById("add-multiple-tasks");
 
+// Event to open popup when the add task button clicked
 addSingleTaskBtn.addEventListener("click", () => openPopup(true));
 addMultipleTasksBtn.addEventListener("click", () => openPopup(false));
 
@@ -28,6 +29,7 @@ function openPopup (isSingle) {
     }
 }
 
+// Event to close the popup
 popup.addEventListener("click", function(event) {
     let closeBtn = document.querySelector("#closeIcon span");
 
@@ -42,6 +44,7 @@ const form = popup.querySelector("form");
 applyFormEvents(form);
 const emptyForm = form.cloneNode(true);
 
+// Events for the form buttons
 newFormBtn.addEventListener("click", createNewForm);
 removeFormBtn.addEventListener("click", removeForm);
 saveBtn.addEventListener("click", submit);
@@ -80,6 +83,7 @@ function submit (){
     }
 }
 
+// Return the task data from the form inputs
 function getTaskData(form) {
     let data = {
         title: form.querySelector(".title").value.trim(),
@@ -158,6 +162,7 @@ function applyFormEvents(form) {
     })
 }
 
+// Show alert if inputs data are not valid
 function showAlert(fieldName) {
     alert.textContent = `Please fill the ${fieldName} field`;
     alert.classList.remove("d-none");
